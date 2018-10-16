@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzkj.mapper.VehBrandMapper">
+
+    <select id="selectByBrandId" parameterType="int" resultType="com.yzkj.base.VehBrand">
+        SELECT id,name,type,model_img_url modelImgUrl,logo_img_url logoImgUrl
+        FROM veh_brand WHERE id = #{id}
+    </select>
+
+	<insert id="insertVehBrand" parameterType="com.yzkj.base.VehBrand">
+		insert into veh_brand(name,type,model_img_url,logo_img_url) values(#{name},#{type},#{modelImgUrl},#{modelImgUrl})
+	</insert>
+	
+	<insert id="insertVehBrandList" parameterType="java.util.List">
+		insert into veh_brand(name,type,model_img_url,logo_img_url) 
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.name},#{item.type},#{item.modelImgUrl},#{item.modelImgUrl})
+		</foreach>
+	</insert>
+</mapper>
+
