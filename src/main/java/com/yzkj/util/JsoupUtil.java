@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.yzkj.base.VehBrand;
+
 public class JsoupUtil {
 //	public static List<String> getVehBrand(String str){
 //		System.out.println("开始解析......");
@@ -49,5 +51,31 @@ public class JsoupUtil {
 		}
 		System.out.println("结束解析......");
 		return null;
+	}
+	
+	public static List<VehBrand> getVehBrand3(String str){
+		System.out.println("开始解析......");
+		List<VehBrand> brands = new ArrayList<VehBrand>();
+		Document doc = Jsoup.parse(str);
+		Elements es = doc.select("ul li");
+		for (Element element : es) {
+			String brandIdStr = element.attr("id");
+			String brandUrl = brandIdStr.replace("b", "https://car.autohome.com.cn/price/brand-") + ".html";
+			//遍历li下的i标签
+			String html = element.select("a").get(0).html();
+			
+			String brandStr = html.substring(html.indexOf("</i>") + 4, html.indexOf("<em>"));
+			String typeCount = element.select("em").get(0).text();
+			int totalchexing = Integer.valueOf(typeCount.substring(typeCount.indexOf("(") + 1, typeCount.indexOf(")")));//包含在售/将售/停售
+			System.out.println(brandUrl + "," + brandStr + "," + totalchexing);
+			
+			VehBrand brand = new VehBrand();
+			brand.setName(brandStr.replace("?", "·"));
+			brand.setType(totalchexing);
+			brand.setModelImgUrl(brandUrl);
+			brands.add(brand);
+		}
+		System.out.println("结束解析......");
+		return brands;
 	}
 }

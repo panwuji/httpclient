@@ -15,7 +15,7 @@
 		insert into veh_brand(name,type,model_img_url,logo_img_url) 
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
-			(#{item.name},#{item.type},#{item.modelImgUrl},#{item.modelImgUrl})
+			(#{item.name},#{item.type},#{item.modelImgUrl},#{item.logoImgUrl})
 		</foreach>
 	</insert>
 </mapper>

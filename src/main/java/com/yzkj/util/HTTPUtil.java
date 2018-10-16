@@ -48,10 +48,10 @@ public class HTTPUtil {
 		HttpEntity entity = response.getEntity();
 		PrintWriter writer = null;
 		try {
-			// 获取响应类型
+			// 获取响应类型text/html; charset=gb2312
 			System.out.println("响应类型Content-Type：" + entity.getContentType().getValue());
 			// 指定编码打印网页内容，可利用jsoup对爬取的网页数据进行处理（jsoup：利用它的API让我们可以像js一样获取标签、属性、值...）
-			String grabResult = EntityUtils.toString(entity, "utf-8");
+			String grabResult = EntityUtils.toString(entity, "gbk");
 			// 输出到指定文件
 //			writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File("./webpage.txt")), "utf-8"));
 //			writer.println(grabResult);

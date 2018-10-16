@@ -3,6 +3,10 @@ package com.yzkj.ctrl;
 import com.yzkj.base.VehBrand;
 import com.yzkj.service.VehBrandService;
 import com.yzkj.service.impl.VehBrandServiceImpl;
+
+import com.yzkj.util.HTTPUtil;
+import com.yzkj.util.JsoupUtil;
+
 import java.util.*;
 
 public class MainCtrl {
@@ -15,6 +19,14 @@ public class MainCtrl {
 		// 测试批量插入品牌数据
 //		testBatchInsertBrand();
 		
+		grabAutHomeBrand();
+	}
+
+	private static void grabAutHomeBrand() {
+		String str = HTTPUtil.HTTPGet("https://car.autohome.com.cn/AsLeftMenu/As_LeftListNew.ashx?typeId=1%20&amp;brandId=0%20&amp;fctId=0%20&amp;seriesId=0");
+		List<VehBrand> brands = JsoupUtil.getVehBrand3(str);
+		VehBrandService vehBrandService = new VehBrandServiceImpl();
+		vehBrandService.addVehBrandList(brands);
 	}
 
 	private static void testBatchInsertBrand() {
