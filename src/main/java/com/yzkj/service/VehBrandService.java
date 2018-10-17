@@ -25,4 +25,6 @@ public interface VehBrandService {
 	 * @param brands
 	 */
 	void addVehBrandList(List<VehBrand> brands);
+	
+	List<VehBrand> getAllVehBrand();
 }

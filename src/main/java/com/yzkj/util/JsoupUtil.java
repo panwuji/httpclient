@@ -72,7 +72,7 @@ public class JsoupUtil {
 			VehBrand brand = new VehBrand();
 			brand.setName(brandStr.replace("?", "¡¤"));
 			brand.setType(totalchexing);
-			brand.setModelImgUrl(brandUrl);
+			brand.setSerieLinkUrl(brandUrl);
 			brands.add(brand);
 		}
 		System.out.println("½áÊø½âÎö......");

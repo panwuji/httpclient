@@ -22,13 +22,6 @@ public class MainCtrl {
 		grabAutHomeBrand();
 	}
 
-	private static void grabAutHomeBrand() {
-		String str = HTTPUtil.HTTPGet("https://car.autohome.com.cn/AsLeftMenu/As_LeftListNew.ashx?typeId=1%20&amp;brandId=0%20&amp;fctId=0%20&amp;seriesId=0");
-		List<VehBrand> brands = JsoupUtil.getVehBrand3(str);
-		VehBrandService vehBrandService = new VehBrandServiceImpl();
-		vehBrandService.addVehBrandList(brands);
-	}
-
 	private static void testBatchInsertBrand() {
 		VehBrandService vehBrandService = new VehBrandServiceImpl();
 		List<VehBrand> vehBrands = new ArrayList<VehBrand>();
@@ -57,7 +50,32 @@ public class MainCtrl {
 	
 	/**********************************以下进入主业务，爬取汽车之家数据**********************************************/
 	
+	/**
+	 * //获取品牌数据
+	 */
+	private static void grabAutHomeBrand() {
+		String str = HTTPUtil.HTTPGet("https://car.autohome.com.cn/AsLeftMenu/As_LeftListNew.ashx?typeId=1%20&amp;brandId=0%20&amp;fctId=0%20&amp;seriesId=0");
+		List<VehBrand> brands = JsoupUtil.getVehBrand3(str);
+		VehBrandService vehBrandService = new VehBrandServiceImpl();
+		vehBrandService.addVehBrandList(brands);
+		
+	}
 	
+	/**
+	 * 完善品牌数据
+	 */
+	public static void fillVehBrand(){
+		// 查询数据库
+		VehBrandService vehBrandService = new VehBrandServiceImpl();
+		
+		// 遍历、访问
+		
+		
+		// 抓取数据
+		
+		
+		// 解析
+	}
 	
 	
 }

@@ -93,4 +93,8 @@ public class VehBrandServiceImpl implements VehBrandService {
 			}
 		}
 	}
+	public List<VehBrand> getAllVehBrand() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

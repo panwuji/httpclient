@@ -18,13 +18,25 @@ public class VehBrand {
 	 */
 	private int type;
 	/**
-	 * 车型访问url
+	 * 车系访问url
 	 */
-	private String modelImgUrl;
+	private String serieLinkUrl;
 	/**
 	 * 品牌logo图片url
 	 */
 	private String logoImgUrl;
+	/**
+	 * 在售车系访问url
+	 */
+	private String onSaleLinkUrl;
+	/**
+	 * 停售车系访问url
+	 */
+	private String offSaleLinkUrl;
+	/**
+	 * 将售车系访问url
+	 */
+	private String willSaleLinkUrl;
 
 	public int getId() {
 		return id;
@@ -50,14 +62,6 @@ public class VehBrand {
 		this.type = type;
 	}
 
-	public String getModelImgUrl() {
-		return modelImgUrl;
-	}
-
-	public void setModelImgUrl(String modelImgUrl) {
-		this.modelImgUrl = modelImgUrl;
-	}
-
 	public String getLogoImgUrl() {
 		return logoImgUrl;
 	}
@@ -66,10 +70,36 @@ public class VehBrand {
 		this.logoImgUrl = logoImgUrl;
 	}
 
-	@Override
-	public String toString() {
-		return "VehBrand [id=" + id + ", name=" + name + ", type=" + type + ", modelImgUrl=" + modelImgUrl
-				+ ", logoImgUrl=" + logoImgUrl + "]";
+	public String getSerieLinkUrl() {
+		return serieLinkUrl;
 	}
-	
+
+	public void setSerieLinkUrl(String serieLinkUrl) {
+		this.serieLinkUrl = serieLinkUrl;
+	}
+
+	public String getOnSaleLinkUrl() {
+		return onSaleLinkUrl;
+	}
+
+	public void setOnSaleLinkUrl(String onSaleLinkUrl) {
+		this.onSaleLinkUrl = onSaleLinkUrl;
+	}
+
+	public String getOffSaleLinkUrl() {
+		return offSaleLinkUrl;
+	}
+
+	public void setOffSaleLinkUrl(String offSaleLinkUrl) {
+		this.offSaleLinkUrl = offSaleLinkUrl;
+	}
+
+	public String getWillSaleLinkUrl() {
+		return willSaleLinkUrl;
+	}
+
+	public void setWillSaleLinkUrl(String willSaleLinkUrl) {
+		this.willSaleLinkUrl = willSaleLinkUrl;
+	}
+
 }

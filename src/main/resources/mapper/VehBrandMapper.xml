@@ -3,20 +3,60 @@
 <mapper namespace="com.yzkj.mapper.VehBrandMapper">
 
     <select id="selectByBrandId" parameterType="int" resultType="com.yzkj.base.VehBrand">
-        SELECT id,name,type,model_img_url modelImgUrl,logo_img_url logoImgUrl
+        SELECT 
+	        id,
+	        name,
+	        type,
+	        serie_link_url serieLinkUrl,
+	        logo_img_url logoImgUrl,
+	        on_sale_link_url onSaleLinkUrl,
+	        off_sale_link_url offSaleLinkUrl,
+	        will_sale_link_url willSaleLinkUrl
         FROM veh_brand WHERE id = #{id}
     </select>
 
 	<insert id="insertVehBrand" parameterType="com.yzkj.base.VehBrand">
-		insert into veh_brand(name,type,model_img_url,logo_img_url) values(#{name},#{type},#{modelImgUrl},#{modelImgUrl})
+		insert into veh_brand(
+			name,
+			type,
+			serie_link_url,
+			logo_img_url,
+			on_sale_link_url,
+			off_sale_link_url,
+			will_sale_link_url
+		) values(
+			#{name},
+			#{type},
+			#{serieLinkUrl},
+			#{logoImgUrl},
+			#{onSaleLinkUrl},
+			#{offSaleLinkUrl},
+			#{willSaleLinkUrl}
+		)
 	</insert>
 	
 	<insert id="insertVehBrandList" parameterType="java.util.List">
-		insert into veh_brand(name,type,model_img_url,logo_img_url) 
-		values
+		insert into veh_brand(
+			name,
+			type,
+			serie_link_url,
+			logo_img_url,
+			on_sale_link_url,
+			off_sale_link_url,
+			will_sale_link_url
+		) values
 		<foreach collection="list" item="item" index="index" separator=",">
-			(#{item.name},#{item.type},#{item.modelImgUrl},#{item.logoImgUrl})
+			(
+				#{item.name},
+				#{item.type},
+				#{item.serieLinkUrl},
+				#{item.logoImgUrl},
+				#{item.onSaleLinkUrl},
+				#{item.offSaleLinkUrl},
+				#{item.willSaleLinkUrl}
+			)
 		</foreach>
 	</insert>
+	
 </mapper>
 
