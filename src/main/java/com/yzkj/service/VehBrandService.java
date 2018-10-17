@@ -25,6 +25,14 @@ public interface VehBrandService {
 	 * @param brands
 	 */
 	void addVehBrandList(List<VehBrand> brands);
-	
+	/**
+	 * 查询所有品牌数据
+	 * @return
+	 */
 	List<VehBrand> getAllVehBrand();
+	/**
+	 * 批量更新品牌数据
+	 * @param list
+	 */
+	void updateBrandBatch(List<VehBrand> list);
 }

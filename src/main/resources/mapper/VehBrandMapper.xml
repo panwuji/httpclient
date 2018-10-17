@@ -2,61 +2,109 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yzkj.mapper.VehBrandMapper">
 
-    <select id="selectByBrandId" parameterType="int" resultType="com.yzkj.base.VehBrand">
-        SELECT 
-	        id,
-	        name,
-	        type,
-	        serie_link_url serieLinkUrl,
-	        logo_img_url logoImgUrl,
-	        on_sale_link_url onSaleLinkUrl,
-	        off_sale_link_url offSaleLinkUrl,
-	        will_sale_link_url willSaleLinkUrl
-        FROM veh_brand WHERE id = #{id}
-    </select>
+	<select id="selectByBrandId" parameterType="int"
+		resultType="com.yzkj.base.VehBrand">
+		SELECT
+		id,
+		name,
+		type,
+		serie_link_url serieLinkUrl,
+		logo_img_url logoImgUrl,
+		on_sale_link_url onSaleLinkUrl,
+		off_sale_link_url offSaleLinkUrl,
+		will_sale_link_url willSaleLinkUrl
+		FROM veh_brand WHERE id = #{id}
+	</select>
 
 	<insert id="insertVehBrand" parameterType="com.yzkj.base.VehBrand">
 		insert into veh_brand(
-			name,
-			type,
-			serie_link_url,
-			logo_img_url,
-			on_sale_link_url,
-			off_sale_link_url,
-			will_sale_link_url
+		name,
+		type,
+		serie_link_url,
+		logo_img_url,
+		on_sale_link_url,
+		off_sale_link_url,
+		will_sale_link_url
 		) values(
-			#{name},
-			#{type},
-			#{serieLinkUrl},
-			#{logoImgUrl},
-			#{onSaleLinkUrl},
-			#{offSaleLinkUrl},
-			#{willSaleLinkUrl}
+		#{name},
+		#{type},
+		#{serieLinkUrl},
+		#{logoImgUrl},
+		#{onSaleLinkUrl},
+		#{offSaleLinkUrl},
+		#{willSaleLinkUrl}
 		)
 	</insert>
-	
+
 	<insert id="insertVehBrandList" parameterType="java.util.List">
 		insert into veh_brand(
-			name,
-			type,
-			serie_link_url,
-			logo_img_url,
-			on_sale_link_url,
-			off_sale_link_url,
-			will_sale_link_url
+		name,
+		type,
+		serie_link_url,
+		logo_img_url,
+		on_sale_link_url,
+		off_sale_link_url,
+		will_sale_link_url
 		) values
-		<foreach collection="list" item="item" index="index" separator=",">
+		<foreach collection="list" item="item" index="index"
+			separator=",">
 			(
-				#{item.name},
-				#{item.type},
-				#{item.serieLinkUrl},
-				#{item.logoImgUrl},
-				#{item.onSaleLinkUrl},
-				#{item.offSaleLinkUrl},
-				#{item.willSaleLinkUrl}
+			#{item.name},
+			#{item.type},
+			#{item.serieLinkUrl},
+			#{item.logoImgUrl},
+			#{item.onSaleLinkUrl},
+			#{item.offSaleLinkUrl},
+			#{item.willSaleLinkUrl}
 			)
 		</foreach>
 	</insert>
+
+	<resultMap type="com.yzkj.base.VehBrand" id="commonResultMap">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="INTEGER"/>
+		<result column="serie_link_url" property="serieLinkUrl" jdbcType="VARCHAR"/>
+		<result column="logo_img_url" property="logoImgUrl" jdbcType="VARCHAR"/>
+		<result column="on_sale_link_url" property="onSaleLinkUrl" jdbcType="VARCHAR"/>
+		<result column="off_sale_link_url" property="offSaleLinkUrl" jdbcType="VARCHAR"/>
+		<result column="will_sale_link_url" property="willSaleLinkUrl" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="all_column">
+		id,
+		name,
+		type,
+		serie_link_url,
+		logo_img_url,
+		on_sale_link_url,
+		off_sale_link_url,
+		will_sale_link_url
+	</sql>
+
+	<select id="selectAllBrand" resultMap="commonResultMap">
+		select 
+		<include refid="all_column"/>
+		from veh_brand
+	</select>
+	
+	<update id="updateBrandBatch" parameterType="java.util.List">
+		<foreach index="index" item="item" collection="list" separator=";">
+			update veh_brand 
+			<trim prefix="set" suffixOverrides=",">
+				<if test="item.onSaleLinkUrl!=null and item.onSaleLinkUrl!=''">
+					on_sale_link_url = #{item.onSaleLinkUrl,jdbcType=VARCHAR},
+				</if>
+				<if test="item.offSaleLinkUrl!=null and item.offSaleLinkUrl!=''">
+					off_sale_link_url = #{item.offSaleLinkUrl,jdbcType=VARCHAR},
+				</if>
+				<if test="item.willSaleLinkUrl!=null and item.willSaleLinkUrl!=''">
+					will_sale_link_url = #{item.willSaleLinkUrl,jdbcType=VARCHAR},
+				</if>
+			</trim>
+			where id = #{item.id,jdbcType=INTEGER}
+		</foreach>
+	</update>
 	
 </mapper>
 

@@ -102,4 +102,11 @@ public class VehBrand {
 		this.willSaleLinkUrl = willSaleLinkUrl;
 	}
 
+	@Override
+	public String toString() {
+		return "VehBrand [id=" + id + ", name=" + name + ", type=" + type + ", serieLinkUrl=" + serieLinkUrl
+				+ ", logoImgUrl=" + logoImgUrl + ", onSaleLinkUrl=" + onSaleLinkUrl + ", offSaleLinkUrl="
+				+ offSaleLinkUrl + ", willSaleLinkUrl=" + willSaleLinkUrl + "]";
+	}
+	
 }

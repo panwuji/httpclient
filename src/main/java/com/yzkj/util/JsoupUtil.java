@@ -78,4 +78,26 @@ public class JsoupUtil {
 		System.out.println("结束解析......");
 		return brands;
 	}
+	
+	public static VehBrand fillBrandParse(VehBrand vehBrand, String html){
+		System.out.println("开始解析......");
+		Map<String, Object> result = new HashMap<String, Object>();
+		Document doc = Jsoup.parse(html);
+		Elements elements = doc.select("div.tab-nav.border-t-no ul li a");
+//		System.out.println("a标签：" + elements);
+		for (Element element : elements) {
+			String serieTabLink = element.attr("href");
+			String type = element.text();
+//			System.out.println(serieTabLink + "," + type);
+			if("在售".equals(type)){
+				vehBrand.setOnSaleLinkUrl("https://car.autohome.com.cn" + serieTabLink);
+			} else if("停售".equals(type)){
+				vehBrand.setOffSaleLinkUrl("https://car.autohome.com.cn" + serieTabLink);
+			} else if("即将销售".equals(type)){
+				vehBrand.setWillSaleLinkUrl("https://car.autohome.com.cn" + serieTabLink);
+			}
+		}
+//		System.out.println("结束解析......" + vehBrand);
+		return vehBrand;
+	}
 }

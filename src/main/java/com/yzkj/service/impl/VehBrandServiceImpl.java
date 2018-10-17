@@ -93,8 +93,53 @@ public class VehBrandServiceImpl implements VehBrandService {
 			}
 		}
 	}
+	/**
+	 * 查询所有品牌数据
+	 */
 	public List<VehBrand> getAllVehBrand() {
-		// TODO Auto-generated method stub
+		SqlSession session = null;
+		try {
+			// 获取单例的SqlSessionFactory
+			SqlSessionFactory factory = SqlSessionFactoryLoader.getSingletonSqlSessionFactory();
+			// 获取sqlSession
+			session = factory.openSession(true);
+			// 获取mapper对象
+			VehBrandMapper vehBrandMapper = session.getMapper(VehBrandMapper.class);
+			// 查询
+			return vehBrandMapper.selectAllBrand();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭资源，可能会发生NullPointException，故try...catch...
+			try {
+				session.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 		return null;
+	}
+	
+	public void updateBrandBatch(List<VehBrand> list) {
+		SqlSession session = null;
+		try {
+			// 获取单例的SqlSessionFactory
+			SqlSessionFactory factory = SqlSessionFactoryLoader.getSingletonSqlSessionFactory();
+			// 获取sqlSession
+			session = factory.openSession(true);
+			// 获取mapper对象
+			VehBrandMapper vehBrandMapper = session.getMapper(VehBrandMapper.class);
+			// 查询
+			vehBrandMapper.updateBrandBatch(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭资源，可能会发生NullPointException，故try...catch...
+			try {
+				session.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 }

@@ -25,4 +25,14 @@ public interface VehBrandMapper {
 	 * @param vehBrand
 	 */
 	void insertVehBrandList(List<VehBrand> brands);
+	/**
+	 * 查询所有品牌数据
+	 * @return
+	 */
+	List<VehBrand> selectAllBrand();
+	/**
+	 * 批量更新品牌
+	 * @param list
+	 */
+	void updateBrandBatch(List<VehBrand> list);
 }

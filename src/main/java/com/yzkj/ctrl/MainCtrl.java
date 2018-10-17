@@ -9,6 +9,8 @@ import com.yzkj.util.JsoupUtil;
 
 import java.util.*;
 
+import org.apache.http.client.utils.HttpClientUtils;
+
 public class MainCtrl {
 	
 	public static void main(String[] args) {
@@ -19,7 +21,10 @@ public class MainCtrl {
 		// 测试批量插入品牌数据
 //		testBatchInsertBrand();
 		
-		grabAutHomeBrand();
+//		grabAutHomeBrand();
+		
+		//填充品牌数据
+		fillVehBrand();
 	}
 
 	private static void testBatchInsertBrand() {
@@ -67,14 +72,24 @@ public class MainCtrl {
 	public static void fillVehBrand(){
 		// 查询数据库
 		VehBrandService vehBrandService = new VehBrandServiceImpl();
-		
+		List<VehBrand> vehBrands = vehBrandService.getAllVehBrand();
+		// 待插入集合
+		List<VehBrand> toUpdateList = new ArrayList<VehBrand>();
 		// 遍历、访问
+		for (int i = 0; i < vehBrands.size(); i++) {
+			VehBrand vehBrand = vehBrands.get(i);
+			String serieLinkUrl = vehBrand.getSerieLinkUrl();
+			// 抓取数据
+			String result = HTTPUtil.HTTPGet(serieLinkUrl);
+			// 解析
+			vehBrand = JsoupUtil.fillBrandParse(vehBrand, result);
+			// 更新vehBrand
+			toUpdateList.add(vehBrand);
+		}
+//		System.out.println("待更新集合数据：" + toUpdateList);
 		
-		
-		// 抓取数据
-		
-		
-		// 解析
+		// 批量更新
+		vehBrandService.updateBrandBatch(toUpdateList);
 	}
 	
 	
