@@ -1,5 +1,6 @@
 package com.yzkj.ctrl;
 
+import com.yzkj.base.SerieModelMapper;
 import com.yzkj.base.VehBrand;
 import com.yzkj.service.VehBrandService;
 import com.yzkj.service.impl.VehBrandServiceImpl;
@@ -9,6 +10,7 @@ import com.yzkj.util.JsoupUtil;
 
 import java.util.*;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.HttpClientUtils;
 
 public class MainCtrl {
@@ -24,7 +26,9 @@ public class MainCtrl {
 //		grabAutHomeBrand();
 		
 		//填充品牌数据
-		fillVehBrand();
+//		fillVehBrand();
+		
+		getAndSaveVehSerieAndModel();
 	}
 
 	private static void testBatchInsertBrand() {
@@ -92,5 +96,44 @@ public class MainCtrl {
 		vehBrandService.updateBrandBatch(toUpdateList);
 	}
 	
+	
+	public static void getAndSaveVehSerieAndModel(){
+		// 查询数据库
+		VehBrandService vehBrandService = new VehBrandServiceImpl();
+		List<VehBrand> vehBrands = vehBrandService.getAllVehBrand();
+		
+		for (int i = 0; i < 5; i++) {
+			VehBrand vehBrand = vehBrands.get(i);
+			String offSaleLinkUrl = vehBrand.getOffSaleLinkUrl();
+			String onSaleLinkUrl = vehBrand.getOnSaleLinkUrl();
+			String willSaleLinkUrl = vehBrand.getWillSaleLinkUrl();
+			// 依次访问
+			if(StringUtils.isNotBlank(offSaleLinkUrl)){
+				// http get访问
+				String offSaleResult = HTTPUtil.HTTPGet(offSaleLinkUrl);
+				// 解析
+				List<SerieModelMapper> parseData = JsoupUtil.parseVehSerie(offSaleResult);
+				System.out.println("品牌《" + vehBrand.getName() + "》的车系、车型数据：" + parseData);
+			}
+			if(StringUtils.isNotBlank(onSaleLinkUrl)){
+				// http get访问
+				String onSaleResult = HTTPUtil.HTTPGet(onSaleLinkUrl);
+				// 解析
+				List<SerieModelMapper> parseData = JsoupUtil.parseVehSerie(onSaleResult);
+				System.out.println("品牌《" + vehBrand.getName() + "》的车系、车型数据：" + parseData);
+			}
+			if(StringUtils.isNotBlank(willSaleLinkUrl)){
+				// http get访问
+				String willSaleResult = HTTPUtil.HTTPGet(willSaleLinkUrl);
+				// 解析
+				List<SerieModelMapper> parseData = JsoupUtil.parseVehSerie(willSaleResult);
+				System.out.println("品牌《" + vehBrand.getName() + "》的车系、车型数据：" + parseData);
+			}
+			
+		}
+		
+		
+		
+	}
 	
 }

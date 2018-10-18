@@ -10,7 +10,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.yzkj.base.SerieModelMapper;
 import com.yzkj.base.VehBrand;
+import com.yzkj.base.VehModel;
 
 public class JsoupUtil {
 //	public static List<String> getVehBrand(String str){
@@ -100,4 +102,38 @@ public class JsoupUtil {
 //		System.out.println("结束解析......" + vehBrand);
 		return vehBrand;
 	}
+	
+	public static List<SerieModelMapper> parseVehSerie(String html){
+		Document doc = Jsoup.parse(html);
+		Elements elements = doc.select("div.tab-nav.border-t-no ~ div.tab-content.fn-visible div.list-cont");
+		
+		// 返回结果集合
+		List<SerieModelMapper> resultList = new ArrayList<SerieModelMapper>();
+		
+		for (Element e : elements) {
+			Element a = e.select("div.main-title a").get(0);
+			String vehSerie = a.text();
+			
+			SerieModelMapper serieModelMapper = new SerieModelMapper();
+			serieModelMapper.setSerieName(vehSerie);
+			
+			Element modelDiv = e.nextElementSibling();
+			if(modelDiv!=null){
+				Elements lis = modelDiv.select("ul.interval01-list li");
+				
+				List<String> models = new ArrayList<String>();
+				
+				for(int i = 0; i<lis.size();i++){
+					String modelName = lis.get(i).select("div").eq(0).select("p a").text();
+					models.add(modelName);
+				}
+				serieModelMapper.setModelList(models);
+			}
+			
+			resultList.add(serieModelMapper);
+		}
+		
+		return resultList;
+	}
+	
 }
